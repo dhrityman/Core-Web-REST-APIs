@@ -1,0 +1,93 @@
+﻿YouTube Heling Video:
+https://www.youtube.com/watch?v=0BrgEc3wSl4
+
+Watched Time: 51:06/3:31:44
+
+Program.cs:
+1. Add Middel ware to the pipeline
+-----------------------------------------------------------------------------------------------------------
+
+
+
+-----------------------------------------------------------------------------------------------------------
+appsettings.json:
+1. Connection string to the database
+2. Logging configuration
+3. Authentication settings (i.e. JWT)
+4. API Key or ClientKey for external services
+5. URL endpoints for external APIs (i.e. weather API, payment gateway)
+
+  "ConnectionStrings": {
+    "DefaultConnection": "Data Source=localhost;Initial Catalog=MyFirstApiDB;Integrated Security=True;Trust Server Certificate=True;Encryption=False;"
+  },
+
+----------------------------------------------------------------------------------------------------------
+Controller: 
+Note:For Web Api base class must be ControllerBase and For MVC base class must be Controller
+
+1. Create a new controller class (e.g., WeatherController.cs)
+2. Define API endpoints (e.g., GET /weather, POST /weather)
+3. Implement action methods to handle requests and return responses
+
+
+
+-----------------------------------------------------------------------------------------------------------
+launchSettings.json: Under Properties folder
+1. Configure application URL and port (i.e.,HTTP,HTTPS and Port Number 7193 and 5297 "applicationUrl": "https://localhost:7193;http://localhost:5297")
+2. Set environment variables (i.e., ASPNETCORE_ENVIRONMENT=Development) => Application is running under development or production environment 
+
+-----------------------------------------------------------------------------------------------------------
+MyFirstApi.http:
+1. Create a new HTTP request file (e.g., MyFirstApi.http)
+2. Define HTTP requests for testing API endpoints (e.g., GET, POST, PUT, DELETE)
+3. Include request headers, query parameters, and request body as needed
+4.Send Request:=> Click on the "Send Request" button in the HTTP request file to execute the defined requests and view responses.
+==============================================================================================================================================
+
+Step 1:Create Connection String in 'appsettings.json'
+Step 2: Create new Folder 'Entities'
+Step 3: Create User Entity in 'Entities' folder and create required properties (i.e. Id, Name,Email, Password)
+Step 4: Add following Dlls through Nuget packages
+        1. Microsoft.EntityFrameworkCore                10.0.10
+        2. Microsoft.EntityFrameworkCore.Design         10.0.10
+        3. Microsoft.EntityFrameworkCore.SqlServer      10.0.10
+        4. Microsoft.EntityFrameworkCore.Tools          10.0.10
+        5. Microsoft.OpenApi                            2.11.0
+Step 5:Create Data Folder and Create 'AppDBContext.cs' class.
+Step 6: To read the connection string use the following in 'Program.cs'
+        builder.Services.AddDbContext<AppDBContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+Step 6: Go to 'Tools'=>'NuGet Package Manager'=>Packate Manager Console for Database Migration
+Step 6.1: Run the following command to create migration (Video Time: 53:00)
+        Add-Migration InitialMigration
+Step 6.2: Run the following command to update the database
+        Update-Database
+
+Step 7: Add new Controller 'AuthController.cs' in 'Controllers' folder of Type 'API Controller-Empty' and add the following code
+
+Step 8: Add 'Services' and 'IService' Folder in the project to use Dependency Injection (Video Time: 59:20)
+Step 9: Add 'AuthService.cs' in 'Services' folder and We will going to use this Service 'AuthService.cs' in our Contoller Class to clean approach.
+Step 10: Add 'IAuthService.cs' in 'IService' folder and add the following code.
+
+Step 11: use AuthService :IAuthService and create constructor
+Step 12: Create Dto Folder to use Model (i.e. User) in AuthService class.
+Step 13: Create a new Class UserDto in Dto folder, to use of this calss the data which are pass to API, through DTO (UserDto.cs) class it passed to Model(User.cs)
+Step 14: Create method Task<Tuple<int,string>> LoginUser(UserDto dto) in AuthService.cs
+Step 15: Register 'AuthService' and 'IAuthService' in program.cs
+Step 16: Write the code for method Task<Tuple<int,string>> LoginUser(UserDto dto) in AuthService.cs (Video Time: 1:17:56)
+Step 17: Call from Postman to test the service and check the response from service.
+Step 18: To take a response in JSON format from the service call, do the following:
+    Step 18.1: Create Folder name 'GenericResponse' in the Project folder.
+    Step 18.2: Create a class named 'ResponseResult.cs' in 'GenericResponse' folder.
+    Step 18.3: Create properties of 'ResponseResult.cs'
+    Step 18.4: Create method  Sucess(T? data, string message)
+    Step 18.5: Create method Failure(T? data, string message)
+
+
+
+
+
+
+
+
+
