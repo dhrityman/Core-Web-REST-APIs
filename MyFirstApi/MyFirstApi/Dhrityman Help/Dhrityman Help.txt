@@ -89,6 +89,41 @@ Step 20: Write code in Task<Tuple<int,string>> RegisterUser(UserDto dto) in Auth
 Step 21: Create a method and Write code in AuthController.cs to call RegisterUser(UserDto dto) of AuthService.cs
     Step 21.1: Create Method PasswordHashing(UserDto dto) in AuthService.cs file
     Step 21.1: Create a method RegisterUser(UserDto userDto) in Controller (AuthController.cs) class and  AuthService.RegisterUser(UserDto dto)
+======================================================================================================================================================
+/************************************* Go gor the Employee Controller and its API (Video Time: 2:00:04)***********************************************/
+
+Step 22: Create the following Classs
+        Step 22.1:  Create Interface IEmployeeService.cs
+        Step 22.2: Create Service calss EmployeeService.cs
+        Step 22.3: Create Dto calss EmployeeDto.cs
+        Step 22.4: Create Controller Class  EmployeeController.cs
+Step 23: Implement the following methods
+        Step 23.1: Properties and constructor of EmployeeDto.cs
+        Step 23.2: GetAllEmployeeAsyn() in Interface and Service Class
+        Step 24.3: Apply 'AsNoTracking()' in the EmployeeService.GetAllEmployeeAsyn() which makes the very fast, it will not look entity level validation 
+Step 24: Decodate API GetAllEmployeeAsyn() in Controller class with [HttpGet("GetAllEmployee")]  
+Fished the above parts (Video Time: 2:19:30)
+ ---------------------------------------------------------------------------------------------------
+Step 25: Add 'CreateEmployee(EmployeeDto employee)' method in IEmployeeService.cs,  EmployeeService.cs and EmployeeController.cs
+Step 26: Use Use 'Model Binder [FromBody]' in CreateEmployee(EmployeeDto employee) method in  EmployeeController.cs
+Step 27: decorate [HttpPost("CreateEmployee")] for create Employee in controller method.
+ ---------------------------------------------------------------------------------------------------
+Step 28: Add 'UpdateEmployee(EmployeeDto employee)' method in IEmployeeService.cs,  EmployeeService.cs and EmployeeController.cs
+Step 29: decorate [HttpPut("UpdateEmployee")] for update Employee in controller method. 
+Fished the above parts (Video Time: 2:37:16)
+ ---------------------------------------------------------------------------------------------------
+ Step 30 : 
+
+
+
+
+
+
+----------------------------------------------------------------------------------------------------------
+Todo List for Dhrityman:
+1. Understand 'Model Binder' (i.e. [FromBody]) in ASP.NET REST APIs
+2. Understand TUPLE
+3. 
 
 
 

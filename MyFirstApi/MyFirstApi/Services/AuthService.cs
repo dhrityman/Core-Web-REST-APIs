@@ -15,7 +15,7 @@ namespace MyFirstApi.Services
         private readonly AppDBContext _context;
 
         /// <summary>
-        /// Use Dependaency Injection by using AppDBContext through constructor.
+        /// Use Dependaency Injection at contructor level by using AppDBContext through constructor.
         /// </summary>
         /// <param name="context"></param>
         public AuthService (AppDBContext context)

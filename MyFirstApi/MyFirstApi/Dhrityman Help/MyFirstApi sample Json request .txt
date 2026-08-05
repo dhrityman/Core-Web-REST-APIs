@@ -1,0 +1,127 @@
+﻿To Convert C# Model (Entity) in JSON, use the following URL:
+https://jsontotable.org/csharp-to-json
+
+https://jsontotable.org/
+======================================================================================
+1. Login
+API Type:POST
+URL:https://localhost:7193/api/Auth/Login
+Request:
+{
+    "Email":"User01Email@gmail.com",
+    "Password":"User01 Password"
+}
+---------------------------------------------------------------------------------------
+Response:
+{
+    "data": null,
+    "message": "Login Sucessfull",
+    "status": true
+}
+======================================================================================
+2. Register
+API Type:POST
+URL:https://localhost:7193/api/Auth/Register
+Request:
+{
+    "Email":"User01Email@gmail.com",
+    "Password":"User01 Password",
+    "Name" : "User01 Name"
+}
+---------------------------------------------------------------------------------------
+Response:
+{
+    "data": null,
+    "message": "This user already exist, Please Register with new user detail",
+    "status": false
+}
+======================================================================================
+3.GetAllEmployee:
+API Type:GET
+URL:https://localhost:7193/api/Employee/GetAllEmployee
+Request:
+
+---------------------------------------------------------------------------------------
+Response:
+"data": [
+        {
+            "id": "926b1c98-b88d-45d0-a630-b532512db28f",
+            "name": "Employee02",
+            "createdDate": "2026-08-05T14:02:43.4391131",
+            "lastModifieddDate": null,
+            "dob": "2000-01-08",
+            "position": "HR",
+            "department": "HR Department",
+            "emailAddress": "Employee02@gmail.com"
+        },
+        {
+            "id": "981ec858-7419-42a4-8be5-bac6a9b026ce",
+            "name": "Employee01",
+            "createdDate": "2026-08-05T14:00:39.2928927",
+            "lastModifieddDate": null,
+            "dob": "2000-01-07",
+            "position": "HR",
+            "department": "HR Department",
+            "emailAddress": "Employee01@gmail.com"
+        }
+    ],
+    "message": "Employee found",
+    "status": true
+======================================================================================
+3.CreateEmployee:
+API Type:POST
+URL:https://localhost:7193/api/Employee/CreateEmployee
+Request:
+{
+  
+  "Name": "Employee02",  
+  "DOB": "2000-01-08",
+  "Position": "HR",
+  "Department": "HR Department",
+  "EmailAddress": "Employee02@gmail.com"
+}
+---------------------------------------------------------------------------------------
+Response:
+{
+    "data": null,
+    "message": "Employee02  Employee created Sucessfully",
+    "status": true
+}
+======================================================================================
+3.UpdateEmployee:
+API Type:PUT
+URL:https://localhost:7193/api/Employee/UpdateEmployee
+Request:
+{
+  "Name": "Employee02",
+  "DOB": "2000-01-09",
+  "Position": "DEV",
+  "Department": "HR Department",
+  "EmailAddress": "Employee02@gmail.com"
+}
+---------------------------------------------------------------------------------------
+Response:
+{
+    "data": null,
+    "message": "Employee02  Employee updated Sucessfully",
+    "status": true
+}
+======================================================================================
+4. DeleteEmployee
+API Type:DELETE
+URL:https://localhost:7193/api/Employee/DeleteEmployee
+Request:
+Step1: Use Params Section not use Body where we give JSON as a Input request body.
+
+Give the parameter like 
+Key:Id
+Value=926B1C98-B88D-45D0-A630-B532512DB28F
+
+---------------------------------------------------------------------------------------
+Response:
+{
+    "data": null,
+    "message": "Employee02,  Employee deleted Sucessfully",
+    "status": true
+}
+======================================================================================
