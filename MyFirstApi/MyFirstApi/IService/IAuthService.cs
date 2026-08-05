@@ -9,6 +9,18 @@ namespace MyFirstApi.IService
     /// </summary>
     public interface IAuthService
     {
+        /// <summary>
+        /// Check Login Details for a Logged-In user.
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
         Task<Tuple<int, string>> LoginUser(UserDto dto);
+
+        /// <summary>
+        /// To Create a new User
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
+        Task<Tuple<int, string>> RegisterUser(UserDto dto);
     }
 }

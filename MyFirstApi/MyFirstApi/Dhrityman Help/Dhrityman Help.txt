@@ -72,6 +72,7 @@ Step 10: Add 'IAuthService.cs' in 'IService' folder and add the following code.
 Step 11: use AuthService :IAuthService and create constructor
 Step 12: Create Dto Folder to use Model (i.e. User) in AuthService class.
 Step 13: Create a new Class UserDto in Dto folder, to use of this calss the data which are pass to API, through DTO (UserDto.cs) class it passed to Model(User.cs)
+---------------------------------------------------------------------------------------------------
 Step 14: Create method Task<Tuple<int,string>> LoginUser(UserDto dto) in AuthService.cs
 Step 15: Register 'AuthService' and 'IAuthService' in program.cs
 Step 16: Write the code for method Task<Tuple<int,string>> LoginUser(UserDto dto) in AuthService.cs (Video Time: 1:17:56)
@@ -82,6 +83,13 @@ Step 18: To take a response in JSON format from the service call, do the followi
     Step 18.3: Create properties of 'ResponseResult.cs'
     Step 18.4: Create method  Sucess(T? data, string message)
     Step 18.5: Create method Failure(T? data, string message)
+    ---------------------------------------------------------------------------------------------------
+Step 19: Write the code for method Task<Tuple<int,string>> RegisterUser(UserDto dto) in AuthService.cs and IAuthService.cs
+Step 20: Write code in Task<Tuple<int,string>> RegisterUser(UserDto dto) in AuthService.cs
+Step 21: Create a method and Write code in AuthController.cs to call RegisterUser(UserDto dto) of AuthService.cs
+    Step 21.1: Create Method PasswordHashing(UserDto dto) in AuthService.cs file
+    Step 21.1: Create a method RegisterUser(UserDto userDto) in Controller (AuthController.cs) class and  AuthService.RegisterUser(UserDto dto)
+
 
 
 
