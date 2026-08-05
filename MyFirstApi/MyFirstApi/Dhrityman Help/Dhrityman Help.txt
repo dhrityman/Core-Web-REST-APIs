@@ -112,7 +112,9 @@ Step 28: Add 'UpdateEmployee(EmployeeDto employee)' method in IEmployeeService.c
 Step 29: decorate [HttpPut("UpdateEmployee")] for update Employee in controller method. 
 Fished the above parts (Video Time: 2:37:16)
  ---------------------------------------------------------------------------------------------------
- Step 30 : 
+ Step 30 : Add DeleteEmployee(Guid Id) method in IEmployeeService.cs,  EmployeeService.cs and EmployeeController.cs
+ Step 31: decorate  [HttpDelete("DeleteEmployee")] for delete Employee in controller method.
+ Step 32: Go to the Postman and use only Param and padd Key='Id' and value=Employee ID from database for the employee you want to delete. 
 
 
 
