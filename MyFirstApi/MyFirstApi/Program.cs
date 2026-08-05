@@ -15,6 +15,9 @@ builder.Services.AddOpenApi();
 // To Register  IAuthService,AuthService and Defining it scope through Dependency injection.
 builder.Services.AddScoped<IAuthService,AuthService>();
 
+// To Register  IEmployeeService,EmployeeService and Defining it scope through Dependency injection.
+builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
