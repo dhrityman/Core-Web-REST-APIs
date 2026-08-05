@@ -125,5 +125,32 @@ namespace MyFirstApi.Controllers
             }
         }
 
+        /// <summary>
+        /// Get Employee Detail by Employee Id. 
+        /// Decorate with 'Model Binder [FromRoute]' and  [HttpGet("GetEmployeeById/{Id}")]
+        /// </summary>
+        /// <param name="Id"> Employee ID</param>
+        /// <returns></returns>
+        [HttpGet("GetEmployeeById/{Id}")]
+        public async Task<IActionResult> GetEmployeeById([FromRoute]Guid Id)
+        {
+            try
+            {
+                var result = await employeeService.GetEmployeeById(Id);
+                if (result.Item1 == 0)
+                {
+                    return Ok(ResponseResult<EmployeeDto>.Failure(result.Item2, "Employee not found"));
+                }
+                else
+                {
+                    return Ok(ResponseResult<EmployeeDto>.Sucess(result.Item2, "Employee found"));
+                }
+            }
+            catch (Exception ex)
+            {
+                return Ok(ResponseResult<EmployeeDto>.Failure(null, "Employee not found, due to some technical error"));
+            }
+        }
+
     }
 }

@@ -103,18 +103,24 @@ Step 23: Implement the following methods
         Step 24.3: Apply 'AsNoTracking()' in the EmployeeService.GetAllEmployeeAsyn() which makes the very fast, it will not look entity level validation 
 Step 24: Decodate API GetAllEmployeeAsyn() in Controller class with [HttpGet("GetAllEmployee")]  
 Fished the above parts (Video Time: 2:19:30)
- ---------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
 Step 25: Add 'CreateEmployee(EmployeeDto employee)' method in IEmployeeService.cs,  EmployeeService.cs and EmployeeController.cs
 Step 26: Use Use 'Model Binder [FromBody]' in CreateEmployee(EmployeeDto employee) method in  EmployeeController.cs
 Step 27: decorate [HttpPost("CreateEmployee")] for create Employee in controller method.
- ---------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
 Step 28: Add 'UpdateEmployee(EmployeeDto employee)' method in IEmployeeService.cs,  EmployeeService.cs and EmployeeController.cs
 Step 29: decorate [HttpPut("UpdateEmployee")] for update Employee in controller method. 
 Fished the above parts (Video Time: 2:37:16)
- ---------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
  Step 30 : Add DeleteEmployee(Guid Id) method in IEmployeeService.cs,  EmployeeService.cs and EmployeeController.cs
  Step 31: decorate  [HttpDelete("DeleteEmployee")] for delete Employee in controller method.
  Step 32: Go to the Postman and use only Param and padd Key='Id' and value=Employee ID from database for the employee you want to delete. 
+ ---------------------------------------------------------------------------------------------------
+  GetEmployeeById:
+  Step 30 : Add GetEmployeeById(Guid Id) method in IEmployeeService.cs,  EmployeeService.cs and EmployeeController.cs
+ Step 31: decorate with [HttpGet("GetEmployeeById/{Id}")] and 'Model Binder [FromRoute]' to get Employee details by Id in controller method.
+ Step 32: Go to the Postman and use only Param and padd Key='Id' and value=Employee ID from database to get Employee details by Id you want to fetch. 
+
 
 
 

@@ -125,3 +125,24 @@ Response:
     "status": true
 }
 ======================================================================================
+5. GetEmployeeById:
+API Type:Get
+URL:https://localhost:7193/api/Employee/GetEmployeeById/82DC1D4F-1E4F-43D8-930C-D5DC68EED2AF
+Request:
+Step1: With in the URL pass Parameter where Employee ID="82DC1D4F-1E4F-43D8-930C-D5DC68EED2AF"
+---------------------------------------------------------------------------------------
+Response:
+   "data": {
+        "id": "82dc1d4f-1e4f-43d8-930c-d5dc68eed2af",
+        "name": "Employee03",
+        "createdDate": "2026-08-05T15:27:45.4127992",
+        "lastModifieddDate": null,
+        "dob": "2000-01-05",
+        "position": "HR",
+        "department": "HR Department",
+        "emailAddress": "Employee03@gmail.com"
+    },
+    "message": "Employee found",
+    "status": true
+======================================================================================
+

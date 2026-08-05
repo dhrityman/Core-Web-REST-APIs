@@ -148,5 +148,26 @@ namespace MyFirstApi.Services
             }
 
         }
+
+
+        public async Task<Tuple<int, EmployeeDto>> GetEmployeeById(Guid Id)
+        {
+            try
+            {
+                var existing = await _context.Employees.FirstOrDefaultAsync(x => x.Id == Id);
+                if (existing == null)
+                {
+                    return new Tuple<int, EmployeeDto>(0, null);
+                }
+
+                return new Tuple<int, EmployeeDto>(1, new EmployeeDto(existing));
+                
+            }
+            catch (Exception ex)
+            {
+                return new Tuple<int, EmployeeDto>(0, null);
+            }
+
+        }
     }
 }

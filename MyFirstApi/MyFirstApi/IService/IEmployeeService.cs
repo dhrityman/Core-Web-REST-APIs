@@ -11,5 +11,7 @@ namespace MyFirstApi.IService
         Task<Tuple<int, string>> UpdateEmployee(EmployeeDto employee);
 
         Task<Tuple<int, string>> DeleteEmployee(Guid Id);
+
+        Task<Tuple<int, EmployeeDto>> GetEmployeeById(Guid Id);
     }
 }
