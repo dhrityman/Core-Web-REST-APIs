@@ -120,7 +120,38 @@ Fished the above parts (Video Time: 2:37:16)
   Step 30 : Add GetEmployeeById(Guid Id) method in IEmployeeService.cs,  EmployeeService.cs and EmployeeController.cs
  Step 31: decorate with [HttpGet("GetEmployeeById/{Id}")] and 'Model Binder [FromRoute]' to get Employee details by Id in controller method.
  Step 32: Go to the Postman and use only Param and padd Key='Id' and value=Employee ID from database to get Employee details by Id you want to fetch. 
+ =========================================================================================================================================================
+ /************************************* Now Start, JWT Authentication Impementation in API (Video Time: 2:57:37)***************************************/
 
+Step 36: Go to the 'Manage NuGet Package for Solution'
+Step 37: Import package 'Microsoft.AspNetCore.Authentication.JwtBearer 10.010'
+Step 38: Go to the Program.cs and apply the JWT Authentication setting for API.
+Step 39: Add required changes for JWT Authentication in appsettings.json
+Key: for signing Key
+
+For Generate Secure JWT Secret Keys for Your Applications:
+in Google search for :jwt secret key generator
+For for the following URL: https://jwtsecrets.com/
+You will find the key just below 'Generate New Secret' button
+
+Please do not share this key, because this is very important to save your application.
+ "JWT": {
+    "Issuer": "dhrityman-client",
+    "Audience": "dhrityman",
+    "Key":  "b4454b026c6256e1b6f35d85fb00b2ff868a6b5fb5e6eb6153623a7a67dcee5e"
+  },
+
+Step 40: Add the following in Program.cs, 'app.UseAuthentication()' must come before the 'app.UseAuthorization();'
+app.UseAuthentication
+Before above Steps, Video Time: 3:06:37
+Step 41: Authorise all the APIs in EmployeeController.cs.
+If System not able to varify the JWT Token, system throw Error Code:401 
+
+Step 42: Create 'GetJwtToken' method in 'AuthService.cs'
+Step 43: Call 'GetJwtToken' method in method 'LoginUser(UserDto dto)' when the user sucessfully login.
+Step 44: Add TokenDto class in Dto Folder and Its properties.
+Step 45: Use  TokenDto boject in method 'LoginUser(UserDto dto)' when the user sucessfully login.
+Step 46: Change type from sting to TokenDto of Method return Type of method 'LoginUser(UserDto dto)'in 'AuthService.cs'
 
 
 
@@ -131,7 +162,13 @@ Fished the above parts (Video Time: 2:37:16)
 Todo List for Dhrityman:
 1. Understand 'Model Binder' (i.e. [FromBody]) in ASP.NET REST APIs
 2. Understand TUPLE
-3. 
+
+3. Understand the following: for JWT Authentication
+Options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+Options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
+4. Step 39: What is Issuer, Audience?
+
 
 
 

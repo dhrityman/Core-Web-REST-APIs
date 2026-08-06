@@ -35,7 +35,7 @@ namespace JWTAuthenticationForApi.Controllers
                 {
                     //return NotFound(result.Item2);
                     //ResponseResult
-                    return NotFound(ResponseResult<string>.Failure(null, result.Item2));
+                    return NotFound(ResponseResult<TokenDto>.Failure(result.Item2, result.Item2.Message));
 
                 }
                 //This is the case of  "To Check incomplete data".
@@ -43,11 +43,11 @@ namespace JWTAuthenticationForApi.Controllers
                 {
 
                     //return BadRequest(result.Item2);
-                    return BadRequest(ResponseResult<string>.Failure(null, result.Item2));
+                    return BadRequest(ResponseResult<TokenDto>.Failure(result.Item2, result.Item2.Message));
                 }
                 //This is the case of  "Login Sucessfull".
                 //return Ok(result.Item2);
-                return Ok(ResponseResult<string>.Sucess(null, result.Item2));
+                return Ok(ResponseResult<TokenDto>.Sucess(result.Item2, result.Item2.Message));
 
             }
             catch (Exception ex)

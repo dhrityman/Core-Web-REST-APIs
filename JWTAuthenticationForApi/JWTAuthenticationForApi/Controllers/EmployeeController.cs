@@ -6,12 +6,14 @@ using JWTAuthenticationForApi.GenericResponse;
 using JWTAuthenticationForApi.IService;
 using JWTAuthenticationForApi.Services;
 using System.ComponentModel;
+using Microsoft.AspNetCore.Authorization;
 
 namespace JWTAuthenticationForApi.Controllers
 {
     /// <summary>
-    /// 
+    /// [Authorize]:=>Step 41: Authorize all the APIs in EmployeeController.cs
     /// </summary>
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class EmployeeController(IEmployeeService employeeService) : ControllerBase

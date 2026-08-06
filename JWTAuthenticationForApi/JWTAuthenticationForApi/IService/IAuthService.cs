@@ -14,7 +14,7 @@ namespace JWTAuthenticationForApi.IService
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
-        Task<Tuple<int, string>> LoginUser(UserDto dto);
+        Task<Tuple<int, TokenDto>> LoginUser(UserDto dto);
 
         /// <summary>
         /// To Create a new User
