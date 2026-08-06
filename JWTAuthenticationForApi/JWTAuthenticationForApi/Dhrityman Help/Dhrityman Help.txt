@@ -1,0 +1,184 @@
+﻿YouTube Heling Video:
+https://www.youtube.com/watch?v=0BrgEc3wSl4
+
+Watched Time: 51:06/3:31:44
+
+Program.cs:
+1. Add Middel ware to the pipeline
+-----------------------------------------------------------------------------------------------------------
+
+
+
+-----------------------------------------------------------------------------------------------------------
+appsettings.json:
+1. Connection string to the database
+2. Logging configuration
+3. Authentication settings (i.e. JWT)
+4. API Key or ClientKey for external services
+5. URL endpoints for external APIs (i.e. weather API, payment gateway)
+
+  "ConnectionStrings": {
+    "DefaultConnection": "Data Source=localhost;Initial Catalog=MyFirstApiDB;Integrated Security=True;Trust Server Certificate=True;Encryption=False;"
+  },
+
+----------------------------------------------------------------------------------------------------------
+Controller: 
+Note:For Web Api base class must be ControllerBase and For MVC base class must be Controller
+
+1. Create a new controller class (e.g., WeatherController.cs)
+2. Define API endpoints (e.g., GET /weather, POST /weather)
+3. Implement action methods to handle requests and return responses
+
+
+
+-----------------------------------------------------------------------------------------------------------
+launchSettings.json: Under Properties folder
+1. Configure application URL and port (i.e.,HTTP,HTTPS and Port Number 7193 and 5297 "applicationUrl": "https://localhost:7193;http://localhost:5297")
+2. Set environment variables (i.e., ASPNETCORE_ENVIRONMENT=Development) => Application is running under development or production environment 
+
+-----------------------------------------------------------------------------------------------------------
+JWTAuthenticationForApi.http:
+1. Create a new HTTP request file (e.g., JWTAuthenticationForApi.http)
+2. Define HTTP requests for testing API endpoints (e.g., GET, POST, PUT, DELETE)
+3. Include request headers, query parameters, and request body as needed
+4.Send Request:=> Click on the "Send Request" button in the HTTP request file to execute the defined requests and view responses.
+==============================================================================================================================================
+
+Step 1:Create Connection String in 'appsettings.json'
+Step 2: Create new Folder 'Entities'
+Step 3: Create User Entity in 'Entities' folder and create required properties (i.e. Id, Name,Email, Password)
+Step 4: Add following Dlls through Nuget packages
+        1. Microsoft.EntityFrameworkCore                10.0.10
+        2. Microsoft.EntityFrameworkCore.Design         10.0.10
+        3. Microsoft.EntityFrameworkCore.SqlServer      10.0.10
+        4. Microsoft.EntityFrameworkCore.Tools          10.0.10
+        5. Microsoft.OpenApi                            2.11.0
+Step 5:Create Data Folder and Create 'AppDBContext.cs' class.
+Step 6: To read the connection string use the following in 'Program.cs'
+        builder.Services.AddDbContext<AppDBContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+Step 6: Go to 'Tools'=>'NuGet Package Manager'=>Packate Manager Console for Database Migration
+Step 6.1: Run the following command to create migration (Video Time: 53:00)
+        Add-Migration InitialMigration
+Step 6.2: Run the following command to update the database
+        Update-Database
+
+Step 7: Add new Controller 'AuthController.cs' in 'Controllers' folder of Type 'API Controller-Empty' and add the following code
+
+Step 8: Add 'Services' and 'IService' Folder in the project to use Dependency Injection (Video Time: 59:20)
+Step 9: Add 'AuthService.cs' in 'Services' folder and We will going to use this Service 'AuthService.cs' in our Contoller Class to clean approach.
+Step 10: Add 'IAuthService.cs' in 'IService' folder and add the following code.
+
+Step 11: use AuthService :IAuthService and create constructor
+Step 12: Create Dto Folder to use Model (i.e. User) in AuthService class.
+Step 13: Create a new Class UserDto in Dto folder, to use of this calss the data which are pass to API, through DTO (UserDto.cs) class it passed to Model(User.cs)
+---------------------------------------------------------------------------------------------------
+Step 14: Create method Task<Tuple<int,string>> LoginUser(UserDto dto) in AuthService.cs
+Step 15: Register 'AuthService' and 'IAuthService' in program.cs
+Step 16: Write the code for method Task<Tuple<int,string>> LoginUser(UserDto dto) in AuthService.cs (Video Time: 1:17:56)
+Step 17: Call from Postman to test the service and check the response from service.
+Step 18: To take a response in JSON format from the service call, do the following:
+    Step 18.1: Create Folder name 'GenericResponse' in the Project folder.
+    Step 18.2: Create a class named 'ResponseResult.cs' in 'GenericResponse' folder.
+    Step 18.3: Create properties of 'ResponseResult.cs'
+    Step 18.4: Create method  Sucess(T? data, string message)
+    Step 18.5: Create method Failure(T? data, string message)
+    ---------------------------------------------------------------------------------------------------
+Step 19: Write the code for method Task<Tuple<int,string>> RegisterUser(UserDto dto) in AuthService.cs and IAuthService.cs
+Step 20: Write code in Task<Tuple<int,string>> RegisterUser(UserDto dto) in AuthService.cs
+Step 21: Create a method and Write code in AuthController.cs to call RegisterUser(UserDto dto) of AuthService.cs
+    Step 21.1: Create Method PasswordHashing(UserDto dto) in AuthService.cs file
+    Step 21.1: Create a method RegisterUser(UserDto userDto) in Controller (AuthController.cs) class and  AuthService.RegisterUser(UserDto dto)
+======================================================================================================================================================
+/************************************* Go gor the Employee Controller and its API (Video Time: 2:00:04)***********************************************/
+
+Step 22: Create the following Classs
+        Step 22.1:  Create Interface IEmployeeService.cs
+        Step 22.2: Create Service calss EmployeeService.cs
+        Step 22.3: Create Dto calss EmployeeDto.cs
+        Step 22.4: Create Controller Class  EmployeeController.cs
+Step 23: Implement the following methods
+        Step 23.1: Properties and constructor of EmployeeDto.cs
+        Step 23.2: GetAllEmployeeAsyn() in Interface and Service Class
+        Step 24.3: Apply 'AsNoTracking()' in the EmployeeService.GetAllEmployeeAsyn() which makes the very fast, it will not look entity level validation 
+Step 24: Decodate API GetAllEmployeeAsyn() in Controller class with [HttpGet("GetAllEmployee")]  
+Fished the above parts (Video Time: 2:19:30)
+---------------------------------------------------------------------------------------------------
+Step 25: Add 'CreateEmployee(EmployeeDto employee)' method in IEmployeeService.cs,  EmployeeService.cs and EmployeeController.cs
+Step 26: Use Use 'Model Binder [FromBody]' in CreateEmployee(EmployeeDto employee) method in  EmployeeController.cs
+Step 27: decorate [HttpPost("CreateEmployee")] for create Employee in controller method.
+---------------------------------------------------------------------------------------------------
+Step 28: Add 'UpdateEmployee(EmployeeDto employee)' method in IEmployeeService.cs,  EmployeeService.cs and EmployeeController.cs
+Step 29: decorate [HttpPut("UpdateEmployee")] for update Employee in controller method. 
+Fished the above parts (Video Time: 2:37:16)
+---------------------------------------------------------------------------------------------------
+ Step 30 : Add DeleteEmployee(Guid Id) method in IEmployeeService.cs,  EmployeeService.cs and EmployeeController.cs
+ Step 31: decorate  [HttpDelete("DeleteEmployee")] for delete Employee in controller method.
+ Step 32: Go to the Postman and use only Param and padd Key='Id' and value=Employee ID from database for the employee you want to delete. 
+ ---------------------------------------------------------------------------------------------------
+  GetEmployeeById:
+  Step 30 : Add GetEmployeeById(Guid Id) method in IEmployeeService.cs,  EmployeeService.cs and EmployeeController.cs
+ Step 31: decorate with [HttpGet("GetEmployeeById/{Id}")] and 'Model Binder [FromRoute]' to get Employee details by Id in controller method.
+ Step 32: Go to the Postman and use only Param and padd Key='Id' and value=Employee ID from database to get Employee details by Id you want to fetch. 
+ =========================================================================================================================================================
+ /************************************* Now Start, JWT Authentication Impementation in API (Video Time: 2:57:37)***************************************/
+
+Step 36: Go to the 'Manage NuGet Package for Solution'
+Step 37: Import package 'Microsoft.AspNetCore.Authentication.JwtBearer 10.010'
+Step 38: Go to the Program.cs and apply the JWT Authentication setting for API.
+Step 39: Add required changes for JWT Authentication in appsettings.json
+Key: for signing Key
+
+For Generate Secure JWT Secret Keys for Your Applications:
+in Google search for :jwt secret key generator
+For for the following URL: https://jwtsecrets.com/
+You will find the key just below 'Generate New Secret' button
+
+Please do not share this key, because this is very important to save your application.
+ "JWT": {
+    "Issuer": "dhrityman-client",
+    "Audience": "dhrityman",
+    "Key":  "b4454b026c6256e1b6f35d85fb00b2ff868a6b5fb5e6eb6153623a7a67dcee5e"
+  },
+
+Step 40: Add the following in Program.cs, 'app.UseAuthentication()' must come before the 'app.UseAuthorization();'
+app.UseAuthentication
+Before above Steps, Video Time: 3:06:37
+Step 41: Authorise all the APIs in EmployeeController.cs.
+If System not able to varify the JWT Token, system throw Error Code:401 
+
+Step 42: Create 'GetJwtToken' method in 'AuthService.cs'
+Step 43: Call 'GetJwtToken' method in method 'LoginUser(UserDto dto)' when the user sucessfully login.
+Step 44: Add TokenDto class in Dto Folder and Its properties.
+Step 45: Use  TokenDto boject in method 'LoginUser(UserDto dto)' when the user sucessfully login.
+Step 46: Change type from sting to TokenDto of Method return Type of method 'LoginUser(UserDto dto)'in 'AuthService.cs'
+
+
+
+
+
+
+----------------------------------------------------------------------------------------------------------
+Todo List for Dhrityman:
+1. Understand 'Model Binder' (i.e. [FromBody]) in ASP.NET REST APIs
+2. Understand TUPLE
+
+3. Understand the following: for JWT Authentication
+Options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+Options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
+4. Step 39: What is Issuer, Audience?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
