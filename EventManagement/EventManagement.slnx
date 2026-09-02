@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="EventManagementWebApi/EventManagementWebApi.csproj" />
+  <Project Path="EventManagerApiSimpleHTTMLClient/EventManagerApiSimpleHTTMLClient.csproj" Id="872d67b6-b1b2-4271-8f5f-849265283a3f" />
+</Solution>
