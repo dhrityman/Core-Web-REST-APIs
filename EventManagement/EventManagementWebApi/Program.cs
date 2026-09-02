@@ -22,6 +22,15 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
+// Step 4.2:Start: Configure CORS to allow requests from any origin
+app.UseCors(options =>
+{
+    options.AllowAnyOrigin()
+           .AllowAnyMethod()
+           .AllowAnyHeader();
+});
+// Step 4.2:End
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
