@@ -3,7 +3,7 @@
 
 <div class="row mb-5">
     <div class="col-lg-8">
-        <h1 class="mb-3">New Event</h1>
+        <h1 class="mb-5">New Event</h1>
 
         @* In case of any exception, show generic error message. *@
         <div class="row mb-3">
@@ -94,12 +94,13 @@
 
     private EventDto EventDtoData { set; get; } = new();
 
-    /*
-     * Step 6.7.4:New property to store Api Json validation errors
-     */
+    
+    // Step 6.7.4:This property will hold any validation errors returned from the API.    
     private JsonNode Errors { set; get; } = new JsonObject();
 
+    // General Error Massage, such as technical error, will be displayed in this property.
     private string GeneralErrorMassage { set; get; } = string.Empty;
+
     /// <summary>
     /// Call at click of Save Button
     /// </summary>
@@ -110,10 +111,11 @@
         /*
         * await:=>The await operator suspends evaluation of the enclosing async method until the asynchronous operation represented by its operand completes.
              * When the asynchronous operation completes, the await operator returns the result of the operation
-             * http.PostAsJsonAsync:=> Sends a POST request to the specified Uri containing the value serialized as JSON in the request body.
+             * http.PostAsJsonAsync:=> Sends a POST (Create) request to the specified Uri containing the value serialized as JSON in the request body.
              */
         try
         {
+            // Step 6.7.3.2: Clear the previous error messages before making the API call.
             var response = await http.PostAsJsonAsync("api/Events", EventDtoData);
             if (response.IsSuccessStatusCode)
             {
@@ -134,10 +136,6 @@
         {
             // Display generic error message in case of Exception.
             GeneralErrorMassage = "Technical Error, contact Event management application support team (Support@EventManagement.com)";
-
         }
-
-
-
     }
 }

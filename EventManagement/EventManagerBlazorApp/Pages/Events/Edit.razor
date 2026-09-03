@@ -1,0 +1,217 @@
+﻿@page "/events/Edit/{EventId:int}"
+
+@using System.Text.Json.Nodes
+
+
+<div class="row mb-5">
+    <div class="col-lg-8">
+        <h1 class="mb-5">Edit Event</h1>
+
+        @if (eventData == null)
+        {
+            <p><em>Loading...</em></p>
+        }
+        else
+        {
+            @* In case of any exception, show generic error message. *@
+            <div class="row mb-3">
+                <div class="col-md-8 offset-md-4">
+                    <span class="text-danger">@GeneralErrorMassage</span>
+                    <span></span>
+                </div>
+            </div>
+
+
+            @*  Event Id *@
+            <div class="row mb-3">
+                <label class="col-md-4 col-form-label">Event ID</label>
+                <div class="col-md-8">
+                    <input class="form-control-plaintext" readonly value="@EventId">                    
+                </div>
+            </div>
+
+
+            @*  Title *@
+            <div class="row mb-3">
+                <label class="col-md-4 col-form-label">Title</label>
+                <div class="col-md-8">
+                    <input class="form-control" @bind="EventDtoData.Title">
+                    @* Step 6.7.4: Show the API error response for Title *@
+                    <span class="text-danger">@Errors["Title"]?[0]</span>
+                </div>
+            </div>
+
+            @*  Start Date *@
+            <div class="row mb-3">
+                <label class="col-md-4 col-form-label">Start Date</label>
+                <div class="col-md-8">
+                    <input type="datetime-local" class="form-control" @bind="EventDtoData.StartDate">
+                    @* Step 6.7.4: Show the API error response for StartDate *@
+                    <span class="text-danger">@Errors["StartDate"]?[0]</span>
+                </div>
+            </div>
+
+            @*  End Date *@
+            <div class="row mb-3">
+                <label class="col-md-4 col-form-label">End Date</label>
+                <div class="col-md-8">
+                    <input type="datetime-local" class="form-control" @bind="EventDtoData.EndDate">
+                    @* Step 6.7.4: Show the API error response for EndDate *@
+                    <span class="text-danger">@Errors["EndDate"]?[0]</span>
+                </div>
+            </div>
+
+            @*  Description *@
+            <div class="row mb-3">
+                <label class="col-md-4 col-form-label">Description</label>
+                <div class="col-md-8">
+                    <textarea class="form-control" @bind="EventDtoData.Description"></textarea>
+                    @* Step 6.7.4: Show the API error response for Description *@
+                    <span class="text-danger">@Errors["Description"]?[0]</span>
+                </div>
+            </div>
+
+            @*  All Day *@
+            <div class="row mb-3">
+                <div class="col-md-8 offset-md-4">
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="gridCheck1" @bind="EventDtoData.AllDay">
+                        <label class="form-check-label" for="gridCheck1">All Day</label>
+                    </div>
+                </div>
+            </div>
+
+            @* Save and Cancel Buttons *@
+            <div class="row">
+                <div class="offset-md-4 col-md-4 d-grid">
+                    <button class="btn btn-primary" @onclick="UpdateEvent">Update</button>
+                </div>
+                <div class="col-md-4 d-grid">
+                    <a class="btn btn-outline-primary" href="/Events">Cancel</a>
+                </div>
+
+            </div>
+        }
+
+    </div>
+</div>
+
+
+
+@inject HttpClient http
+@inject NavigationManager navManager
+
+@code {
+    // This parameter is used to capture the EventId from the URL
+    [Parameter]
+    public int EventId { get; set; }
+
+    // This property will hold the event data fetched from the API.
+    public Event? eventData = null;
+    // This property will hold the event data to be sent to the API for updating.
+    public EventDto EventDtoData { set; get; } = new();
+    // This property will hold any validation errors returned from the API.
+    public JsonNode Errors { set; get; } = new JsonObject();
+
+    // General Error Massage, such as technical error, will be displayed in this property.
+    private string GeneralErrorMassage { set; get; } = string.Empty;
+
+    /// <summary>
+    /// OnParametersSetAsync:=> This method is called when the component's parameters have been set.
+    /// </summary>
+    /// <returns></returns>
+    protected override async Task OnParametersSetAsync()
+    {
+        try
+        {
+            // Fetch the event data from the API using the EventId.
+            eventData = await http.GetFromJsonAsync<Event>("api/events/"+EventId);
+            if (eventData != null)
+            {
+                // Populate the EventDtoData with the fetched event data.
+                EventDtoData.Title = eventData.Title ?? string.Empty;
+                EventDtoData.Description = eventData.Description ?? string.Empty;
+                EventDtoData.StartDate = (eventData.StartDate == DateTime.MinValue ? DateTime.Now : eventData.StartDate);
+                EventDtoData.EndDate = eventData.EndDate;
+                EventDtoData.AllDay = eventData.AllDay;
+            }
+        }
+        catch (Exception ex)
+        {
+            // Handle any exceptions that occur during the API call.
+            Console.WriteLine($"Error fetching event data: {ex.Message}");
+            // Optionally, you can display an error message to the user or navigate to an error page.
+            // Display generic error message in case of Exception.
+            GeneralErrorMassage = "Technical Error, contact Event management application support team (Support@EventManagement.com)";
+        }
+    }
+
+    /*
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            // Fetch the event data from the API using the EventId.
+            eventData = await http.GetFromJsonAsync<Event>("api/events/" + EventId);
+            if (eventData != null)
+            {
+                // Populate the EventDtoData with the fetched event data.
+                EventDtoData.Title = eventData.Title ?? string.Empty;
+                EventDtoData.Description = eventData.Description ?? string.Empty;
+                EventDtoData.StartDate = (eventData.StartDate == DateTime.MinValue ? DateTime.Now : eventData.StartDate);
+                EventDtoData.EndDate = eventData.EndDate;
+                EventDtoData.AllDay = eventData.AllDay;
+            }
+        }
+        catch (Exception ex)
+        {
+            // Handle any exceptions that occur during the API call.
+            Console.WriteLine($"Error fetching event data: {ex.Message}");
+            // Optionally, you can display an error message to the user or navigate to an error page.
+            // Display generic error message in case of Exception.
+            GeneralErrorMassage = "Technical Error, contact Event management application support team (Support@EventManagement.com)";
+        }
+    }
+   */
+
+
+    /// <summary>
+    /// Call at click of Save Button
+    /// </summary>
+    /// <returns></returns>
+    private async Task UpdateEvent()
+    {
+        GeneralErrorMassage = string.Empty;
+        /*
+        * await:=>The await operator suspends evaluation of the enclosing async method until the asynchronous operation represented by its operand completes.
+             * When the asynchronous operation completes, the await operator returns the result of the operation
+             * http.PutAsJsonAsync:=> Sends a PuT request (Edit or Update request) to the specified Uri containing the value serialized as JSON in the request body.
+             */
+        try
+        {
+            // Step 6.7.3.2: Clear the previous error messages before making the API call.
+            var response = await http.PutAsJsonAsync($"api/events/"+EventId, EventDtoData);
+            if (response.IsSuccessStatusCode)
+            {
+                navManager.NavigateTo("/Events");
+            }
+            else
+            {
+                var strResponse = await response.Content.ReadAsStringAsync();
+                Console.WriteLine("Json Response: \n" + strResponse);
+
+                //Step 6.7.4:Extract the error message from Api response.
+                var jsonResponse = JsonNode.Parse(strResponse);
+                Errors = jsonResponse?["errors"] ?? new JsonObject();
+
+            }
+        }
+        catch (Exception ex)
+        {
+            // Display generic error message in case of Exception.
+            GeneralErrorMassage = "Technical Error, contact Event management application support team (Support@EventManagement.com)";
+
+        }
+    }
+
+}
