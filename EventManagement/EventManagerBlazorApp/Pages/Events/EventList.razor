@@ -1,0 +1,83 @@
+﻿@page "/Events"
+
+<h1 class="mb-3">Event List</h1>
+@inject HttpClient Http
+
+@if (events == null)
+{
+    <p><em>Loading...</em></p>
+}
+else if (events.Count == 0)
+{
+    <p>No events found.</p>
+}
+else
+{
+    <a class="btn btn-primary mb-3 me-2" href="/Events/Create">Add Event</a>
+    <table class="table mb-5">
+        <thead>
+            <tr>
+                <th align="center">Id</th>
+                <th align="center">Title</th>
+                <th align="center">Description</th>
+                <th align="center">StartDate</th>
+                <th align="center">EndDate</th>
+                <th>AllDay</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var eventItem in events)
+            {
+                <tr>
+                    <td>@eventItem.Id</td>
+                    <td>@eventItem.Title</td>
+                    @* <td>@eventItem.Description</td> *@
+                    <td>
+                        @* <textarea class="form-control" readonly>@eventItem.Description</textarea> *@
+                        <textarea class="form-control" readonly @bind="@eventItem.Description"></textarea>
+                    </td>
+                    <td>@eventItem.StartDate.ToShortDateString()</td>
+                    
+                        @if (eventItem.EndDate.HasValue)
+                        {
+                        <td>@eventItem.EndDate.Value.ToShortDateString()</td>
+                        }
+                        else
+                        {
+                        <td></td>
+                        }
+                    
+
+                    <td>
+                        @if (eventItem.AllDay)
+                        {
+                            <span class="badge rounded-pill text-bg-success">Yes</span>
+                        }
+                        else
+                        {
+                            <span class="badge rounded-pill text-bg-warning">No</span>
+                        }
+
+                    </td>
+                    <td style="white-space:nowrap; width:10px">
+
+                        <a class="btn btn-primary btn-sm" href="/Event/Edit/@eventItem.Id"> Edit</a>
+                        <a class="btn btn-danger btn-sm"> Delete</a>
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+@code {
+    private List<Event>? events;
+
+    protected override async Task OnInitializedAsync()
+    {
+        events = await Http.GetFromJsonAsync<List<Event>>("api/events");
+    }
+}
