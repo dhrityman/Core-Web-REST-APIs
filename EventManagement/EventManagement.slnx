@@ -1,4 +1,5 @@
 <Solution>
   <Project Path="EventManagementWebApi/EventManagementWebApi.csproj" />
   <Project Path="EventManagerApiSimpleHTTMLClient/EventManagerApiSimpleHTTMLClient.csproj" Id="872d67b6-b1b2-4271-8f5f-849265283a3f" />
+  <Project Path="EventManagerBlazorApp/EventManagerBlazorApp.csproj" Id="e092f793-9015-4a4c-a132-cd419e435ebd" />
 </Solution>
