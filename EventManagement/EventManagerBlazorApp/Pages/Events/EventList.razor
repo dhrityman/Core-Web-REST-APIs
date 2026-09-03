@@ -14,6 +14,15 @@ else if (events.Count == 0)
 else
 {
     <a class="btn btn-primary mb-3 me-2" href="/Events/Create">Add Event</a>
+
+    @* In case of any exception, show generic error message. *@
+    <div class="row mb-3">
+        <div class="col-md-8 offset-md-4">
+            <span class="text-danger">@GeneralErrorMassage</span>
+            <span></span>
+        </div>
+    </div>
+
     <table class="table mb-5">
         <thead>
             <tr>
@@ -35,19 +44,19 @@ else
                     @* <td>@eventItem.Description</td> *@
                     <td>
                         @* <textarea class="form-control" readonly>@eventItem.Description</textarea> *@
-                        <textarea class="form-control" readonly @bind="@eventItem.Description"></textarea>
+                        <textarea class="form-control-plaintext" readonly @bind="@eventItem.Description"></textarea>
                     </td>
                     <td>@eventItem.StartDate.ToShortDateString()</td>
-                    
-                        @if (eventItem.EndDate.HasValue)
-                        {
+
+                    @if (eventItem.EndDate.HasValue)
+                    {
                         <td>@eventItem.EndDate.Value.ToShortDateString()</td>
-                        }
-                        else
-                        {
+                    }
+                    else
+                    {
                         <td></td>
-                        }
-                    
+                    }
+
 
                     <td>
                         @if (eventItem.AllDay)
@@ -62,8 +71,8 @@ else
                     </td>
                     <td style="white-space:nowrap; width:10px">
 
-                        <a class="btn btn-primary btn-sm" href="/Event/Edit/@eventItem.Id"> Edit</a>
-                        <a class="btn btn-danger btn-sm"> Delete</a>
+                        <a class="btn btn-primary btn-sm" href="/Events/Edit/@eventItem.Id">Edit</a>
+                        <a class="btn btn-danger btn-sm" @onclick="async () => await DeleteEvent(eventItem.Id)">Delete</a>
 
                     </td>
                 </tr>
@@ -75,9 +84,53 @@ else
 
 @code {
     private List<Event>? events;
+    // General Error Massage, such as technical error, will be displayed in this property.
+    private string GeneralErrorMassage { set; get; } = string.Empty;
+
+    private JsonNode Errors { set; get; } = new JsonObject();
 
     protected override async Task OnInitializedAsync()
     {
-        events = await Http.GetFromJsonAsync<List<Event>>("api/events");
+        try
+        {
+            events = await Http.GetFromJsonAsync<List<Event>>("api/events");
+        }
+        catch (Exception ex)
+        {
+            // Display generic error message in case of Exception.
+            GeneralErrorMassage = "Technical Error, contact Event management application support team (Support@EventManagement.com)";
+        }
+    }
+
+    /// <summary>
+    /// DeleteEvent: This method is called when the user clicks the "Delete" button for an event. 
+    /// It sends a DELETE request to the API to remove the event with the specified Id. If the deletion is successful, 
+    /// it refreshes the list of events. If there is an error, it captures and displays the error message.
+    /// </summary>
+    /// <param name="Id"></param>
+    /// <returns></returns>
+    private async Task DeleteEvent(int Id)
+    {
+        try
+        {
+            var response = await Http.DeleteAsync("api/events/" + Id);
+            if (response.IsSuccessStatusCode)
+            {
+                events = await Http.GetFromJsonAsync<List<Event>>("api/events");
+            }
+            else
+            {
+                var strResponse = await response.Content.ReadAsStringAsync();
+                Console.WriteLine("Json Response: \n" + strResponse);
+
+                var jsonResponse = JsonNode.Parse(strResponse);
+                Errors = jsonResponse?["errors"] ?? new JsonObject();
+            }
+        }
+        catch (Exception ex)
+        {
+            // Display generic error message in case of Exception.
+            GeneralErrorMassage = "Technical Error, contact Event management application support team (Support@EventManagement.com)";
+        }
     }
 }
